@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Anonymous friends</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <style type="text/css">
+        body {background-color: rgb(245, 245, 245) !important;}
+        p {overflow-wrap: break-word; word-wrap: break-word;}
+        .container {max-width: 640px !important;}
+        .hello-form {margin-bottom: 20px;}
+        header {margin: 50px 0 40px 0;}
+        header h1 {font-size: 60px; font-weight: bold;}
+        .sub-title {font-size: 24px;}
+        @media screen and (max-width: 600px) {.sub-title {display: block;}}
+        header a {text-decoration: none !important;}
+        footer {margin: 20px;}
+    </style>
+</head>
+<body>
+<main class="container">
+    <header>
+        <h1 class="text-center display-4">
+            <a href="/" class="text-success"><strong>Anonymous friends</strong></a>
+
+        </h1>
+    </header>
+    <div class="hello-form" align="middle">
+        <img th:src="@{/image/letter.png}"><br><br>
+        <div class="form-group required"><label class="form-control-label" for="name">Ta的名字：</label>
+
+            <input class="form-control" id="name" name="name" required type="text" value="">
+
+        </div>
+
+</textarea>
+
+        </div>
+        <input class="btn btn-success" id="submit" name="submit" type="submit" value="查找留言">
+
+<br><br>
+    </div>
+    <div id="size">
+    </div>
+    <div class="list-group" id="list-group">
+
+    </div>
+    <footer class="text-center">
+        <small> &copy; солнце° skk
+        </small>
+        <p><a name="bottom" href="#" title="Go Top">&uarr;Go Top</a></p>
+    </footer>
+</main>
+</body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+
+    function drawh5(size){
+		$("#size").html("")
+		var str= ""
+        str = str + "<h5>一共有" + size+"条留言"+"<small class=\"float-right\">\n" +
+            "            <a href=\"#bottom\" title=\"Go Bottom\">&darr;Go Bottom</a>\n" +
+            "        </small>"+"</h5>"
+        $("#size").html(str)
+
+    }
+
+    function drawmessage(res){
+        $("#list-group").html("")
+        var str= ""
+        $.each(res.result, function (index, value) {//index是循环的序数
+			str = str +
+                '<div class="list-group-item list-group-item-action flex-column ">'+
+                    '<div class="d-flex w-100 justify-content-between">'+
+                        '<h5 class="mb-1 text-success">'+res.result[index].province+
+                        '</h5>'+
+                         res.result[index].postTime+
+
+                    '</div>'+
+                    '<p class="mb-1">'+ res.result[index].message+'</p>'+
+                '</div>'
+			$("#list-group").html(str)
+		});
+    }
+
+    $("#submit").on("click",function (){
+        var name = $("#name").val()
+        $.ajax({
+            url:"/getcontactByname?name="+name,
+            type:"get",
+            success:function(res){
+
+                if (res.status==0)
+                {
+                    drawh5(res.size)
+                    drawmessage(res)
+                }
+                else{
+                    drawh5(0)
+                    $("#list-group").html("")
+                }
+            }
+        })
+    })
+
+
+</script>
+</html>

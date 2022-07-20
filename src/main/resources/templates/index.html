@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Anonymous friends</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <style type="text/css">
+        body {background-color: rgb(245, 245, 245) !important;}
+        p {overflow-wrap: break-word; word-wrap: break-word;}
+        .container {max-width: 640px !important;}
+        .hello-form {margin-bottom: 20px}
+        header {margin: 50px 0 40px 0;}
+        header h1 {font-size: 60px; font-weight: bold;}
+        .sub-title {font-size: 24px;}
+        @media screen and (max-width: 600px) {.sub-title {display: block;}}
+        header a {text-decoration: none !important;}
+        footer {margin: 20px;}
+    </style>
+</head>
+<body>
+<main class="container">
+    <header>
+        <h1 class="text-center display-4">
+            <a href="/" class="text-success"><strong>Anonymous friends</strong></a>
+
+        </h1>
+    </header>
+    <div class="hello-form" align="middle">
+        <img th:src="@{/image/letter.png}"><br><br>
+        <button type="button" class="btn btn-primary" id="liuyan">给Ta留言</button>
+        <button type="button" class="btn btn-warning" id="chazhao">查看留言</button>
+    </div>
+    <footer class="text-center">
+<!--        <p><a name="bottom" href="#" title="Go Top">&uarr;返回顶部</a></p>-->
+    </footer>
+</main>
+
+</body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script>
+    $("#liuyan").on("click",function (){
+        location.href="/contact"
+    })
+
+    $("#chazhao").on("click",function (){
+        location.href="/getcontact"
+    })
+</script>
+</html>
